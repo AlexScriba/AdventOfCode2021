@@ -13,15 +13,6 @@ const GetNums = (line: string) => {
 };
 
 const printMap = (board: number[][], size: number) => {
-	// let outStr = '';
-	// board.forEach((row) => {
-	// 	row.forEach((num) => {
-	// 		outStr += num;
-	// 	});
-	// 	outStr += '\n';
-	// });
-	// console.log(outStr);
-
 	let outStr = '';
 	for (let i = 0; i < size; i++) {
 		for (let j = 0; j < size; j++) {
