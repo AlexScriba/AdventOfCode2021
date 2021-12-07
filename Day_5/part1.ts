@@ -1,4 +1,3 @@
-import { linkSync } from 'fs';
 import GetInput from '../Utils/FileInput';
 
 const strings = GetInput('./Day_5/test.txt');

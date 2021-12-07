@@ -1,8 +1,6 @@
-import * as fs from 'fs';
+import GetInput from '../Utils/FileInput';
 
-const file = fs.readFileSync('./1.2/inputs.txt', 'utf-8');
-
-const numStrings = file.toString().split('\n');
+const numStrings = GetInput('./Day_1/inputs.txt');
 const nums = numStrings.map((val) => Number(val));
 
 let count = 0;

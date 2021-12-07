@@ -1,7 +1,6 @@
-import * as fs from 'fs';
+import GetInput from '../Utils/FileInput';
 
-const file = fs.readFileSync('./2.1/inputs.txt');
-const instructions = file.toString().split('\n');
+const instructions = GetInput('./Day_2/inputs.txt');
 
 const ExecuteInstruction = (instruction: string, distance: number, depth: number) => {
 	let dist = distance;
@@ -26,5 +25,9 @@ const ExecuteInstruction = (instruction: string, distance: number, depth: number
 
 let distance = 0;
 let depth = 0;
+
+instructions.forEach((instruction) => {
+	[distance, depth] = ExecuteInstruction(instruction, distance, depth);
+});
 
 console.log(distance * depth);

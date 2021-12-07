@@ -1,8 +1,6 @@
-import { count } from 'console';
-import * as fs from 'fs';
+import GetInput from '../Utils/FileInput';
 
-const file = fs.readFileSync('./Day_3/inputs.txt');
-const logs = file.toString().split('\n');
+const logs = GetInput('./Day_3/inputs.txt');
 
 const oneCounts = new Array(logs[0].length - 1).fill(0);
 

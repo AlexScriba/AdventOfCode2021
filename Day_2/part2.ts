@@ -1,7 +1,6 @@
-import * as fs from 'fs';
+import GetInput from '../Utils/FileInput';
 
-const file = fs.readFileSync('./Day_2/inputs.txt');
-const instructions = file.toString().split('\n');
+const instructions = GetInput('./Day_2/inputs.txt');
 
 const ExecuteInstruction = (instruction: string, distance: number, depth: number, aim: number) => {
 	let dist = distance;

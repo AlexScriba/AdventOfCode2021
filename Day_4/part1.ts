@@ -1,8 +1,7 @@
-import * as fs from 'fs';
+import GetInput from '../Utils/FileInput';
 import Board from './Board';
 
-const file = fs.readFileSync('./Day_4/inputs.txt');
-const lines = file.toString().split('\n');
+const lines = GetInput('./Day_4/inputs.txt');
 
 const boardDimension = 5;
 
