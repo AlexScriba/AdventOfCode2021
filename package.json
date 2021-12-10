@@ -2,6 +2,7 @@
   "dependencies": {
     "@types/node": "^16.11.11",
     "fs": "^0.0.1-security",
+    "ts-data.stack": "^1.0.6",
     "ts-priority-queue": "^0.1.1"
   }
 }
