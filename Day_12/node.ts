@@ -26,7 +26,7 @@ abstract class node {
 	};
 
 	//for part 2
-	abstract unvisit: () => void;
+	unvisit: () => void = () => {};
 }
 
 class smallNode extends node {
@@ -39,8 +39,6 @@ class smallNode extends node {
 
 class largeNode extends node {
 	hasMax = false;
-
-	unvisit = () => {};
 }
 
 // for part 2
