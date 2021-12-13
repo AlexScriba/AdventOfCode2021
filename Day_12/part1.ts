@@ -50,11 +50,6 @@ let total = 0;
 
 const path: node[] = [];
 
-// const clear = () => {
-// 	allNodes.forEach((n) => n.unvisit());
-// 	path.forEach((n) => n.visit());
-// };
-
 const numPaths = (n: node): number => {
 	let count = 0;
 
@@ -64,13 +59,13 @@ const numPaths = (n: node): number => {
 	}
 
 	if (!n.visit()) {
-		console.log('\tDead end! ', printPath(path));
+		// console.log('\tDead end! ', printPath(path));
 		return 0;
 	}
 
 	path.push(n);
 
-	console.log('Now visiting: ', n.name, printPath(path));
+	// console.log('Now visiting: ', n.name, printPath(path));
 
 	const cons = n.connections;
 	for (let i = 0; i < cons.length; i++) {
@@ -78,7 +73,6 @@ const numPaths = (n: node): number => {
 	}
 
 	path.pop();
-	// clear();
 	n.unvisit();
 	return count;
 };
