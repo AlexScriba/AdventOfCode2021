@@ -1,69 +1,85 @@
 import GetInput from '../Utils/FileInput';
 
-const lines = GetInput('./Day_14/test.txt');
-
 // set up
-interface Rule {
-	pattern: string;
-	insertion: string;
+interface IHash {
+	[pattern: string]: string;
 }
 
-const doIteration = (compound: string, rules: Rule[]) => {
-	let str = '';
+interface ICounter {
+	[pattern: string]: number;
+}
 
-	for (let i = 0; i < compound.length - 1; i++) {
-		str += compound.charAt(i);
+const solve = (old_temp: ICounter, insertions: IHash, chars: ICounter, steps: number) => {
+	for (let step = 0; step < steps; step++) {
+		let new_temp: ICounter = {};
 
-		let pattern = compound.slice(i, i + 2);
+		for (let item in old_temp) {
+			let insert = insertions[item];
 
-		for (let j = 0; j < rules.length; j++) {
-			if (pattern === rules[j].pattern) {
-				str += rules[j].insertion;
-				break;
-			}
+			let a = item.charAt(0);
+			let b = item.charAt(1);
+			let value = old_temp[item];
+
+			if (!new_temp[a + insert]) new_temp[a + insert] = 0;
+			new_temp[a + insert] += value;
+
+			if (!new_temp[insert + b]) new_temp[insert + b] = 0;
+			new_temp[insert + b] += value;
+
+			if (!chars[insert]) chars[insert] = 0;
+			chars[insert] += value;
+		}
+
+		old_temp = new_temp;
+	}
+
+	// get values
+	let max = Number.NEGATIVE_INFINITY;
+	let min = Number.POSITIVE_INFINITY;
+
+	for (let item in chars) {
+		let val = chars[item];
+		if (val > max) {
+			max = val;
+		}
+
+		if (val < min) {
+			min = val;
 		}
 	}
 
-	str += compound.at(-1);
-
-	return str;
+	return max - min;
 };
 
-const doCounts = (compound: string) => {
-	const counts: number[] = new Array(26).fill(0);
+//logic
+const lines = GetInput('./Day_14/inputs.txt');
 
-	for (let i = 0; i < compound.length; i++) {
-		let charCode = compound.charCodeAt(i) - 'A'.charCodeAt(0);
-		counts[charCode]++;
-	}
+let insertions: IHash = {};
+let chars: ICounter = {};
+let templateParts: string[] = [];
+let template: ICounter = {};
 
-	return counts;
-};
-
-// logic
-
-let compound = lines[0];
-let rules: Rule[] = [];
-
-for (let i = 2; i < lines.length; i++) {
-	const values = lines[i].split(' -> ');
-	rules.push({ pattern: values[0], insertion: values[1] });
+const polymer = lines[0];
+for (let i = 0; i < polymer.length - 1; i++) {
+	templateParts.push(polymer.slice(i, i + 2));
 }
 
-for (let i = 0; i < 10; i++) {
-	compound = doIteration(compound, rules);
-	console.log(i);
-	console.log(doCounts(compound));
+for (let i = 0; i < polymer.length; i++) {
+	let char = polymer.charAt(i);
+	if (!chars[char]) chars[char] = 0;
+	chars[char]++;
 }
 
-const counts = doCounts(compound);
+templateParts.forEach((pair) => {
+	if (!template[pair]) template[pair] = 0;
 
-let max = Number.NEGATIVE_INFINITY;
-let min = Number.POSITIVE_INFINITY;
-
-counts.forEach((count) => {
-	if (count > max) max = count;
-	if (count < min && count !== 0) min = count;
+	template[pair]++;
 });
 
-console.log(max - min);
+for (let i = 2; i < lines.length; i++) {
+	let lineParts = lines[i].split(' -> ');
+	insertions[lineParts[0]] = lineParts[1];
+}
+
+let res = solve(template, insertions, chars, 40);
+console.log(res);
